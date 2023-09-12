@@ -87,8 +87,6 @@ class CanvasBackgroundSetter {
         this.canvas.style.backgroundColor = color;
     }
 }
-
-// Khởi tạo một đối tượng CanvasBackgroundSetter
 const canvasSetter = new CanvasBackgroundSetter("canvas", "ColorInput", "set-canvas-color");
 
 
@@ -275,8 +273,8 @@ function createSquare() {
         width: 100,
         height: 100,
         fill:'',
-        strokeWidth: parseInt(size), // Sử dụng độ rộng nét đã chọn
-        stroke: colorPicker.value // Màu của nét viền (đen trong trường hợp này)
+        strokeWidth: parseInt(size), 
+        stroke: colorPicker.value 
         
     });
     canvas.add(square);
@@ -332,7 +330,7 @@ canvas.on('mouse:up', () => {
 });
 
 function disableSelectionAndMovement() {
-    canvas.selection = false; // Tắt chế độ chọn (Selection Mode)
+    canvas.selection = false; 
     canvas.forEachObject((obj) => {
       obj.selectable = false;
       obj.evented = false;
@@ -340,14 +338,15 @@ function disableSelectionAndMovement() {
   }
   
 function enableSelectionAndMovement() {
-canvas.selection = true; // Bật lại chế độ chọn (Selection Mode)
+canvas.selection = true; 
 canvas.forEachObject((obj) => {
     obj.selectable = true;
     obj.evented = true;
 });
 }
-// Hàm để bật/tắt chế độ vẽ đường thẳng
+// Hàm bật/tắt chế độ vẽ đường thẳng
 function toggleDrawingMode() {
+    canvas.isDrawingMode = false;
   isDrawingMode = !isDrawingMode;
   if (isDrawingMode) {
     disableSelectionAndMovement();
@@ -359,8 +358,6 @@ function toggleDrawingMode() {
     canvas.remove(line);
   }
 }
-
-// Gán sự kiện click cho nút "Bật/Tắt Đường Thẳng"
 const lineButton = document.getElementById('line');
 lineButton.addEventListener('click', toggleDrawingMode);
 
@@ -450,26 +447,22 @@ var opacityButton = document.getElementById('opacity');
 opacityButton.addEventListener('click', applyOpacity);
 
 
-
-
+//filter
 function applyDefault() {
     var activeObject = canvas.getActiveObject();
-    if (activeObject) {
-        // Xóa tất cả các bộ lọc hiện tại trên đối tượng
+    if (activeObject) {        
         activeObject.filters = [];
         activeObject.applyFilters();
-        canvas.requestRenderAll(); // Sử dụng requestRenderAll thay cho renderAll
+        canvas.requestRenderAll(); 
     }
 }
-
 var defaultButton = document.getElementById('default-filter');
 defaultButton.addEventListener('click', applyDefault);
 
 //filter-warm
 function applyWarm() {
     var activeObject = canvas.getActiveObject();
-    if (activeObject) {
-        // Tạo một bộ lọc tùy chỉnh để điều chỉnh màu sắc
+    if (activeObject) {      
         var warmFilter = new fabric.Image.filters.ColorMatrix({
             matrix: [
                 1, 0, 0, 0, 0.1, // Điều chỉnh độ đỏ
@@ -477,11 +470,10 @@ function applyWarm() {
                 0, 0, 1, 0, 0, // Điều chỉnh độ xanh
                 0, 0, 0, 1, 0
             ]
-        });
-        // Đặt bộ lọc cho đối tượng và áp dụng chúng
+        });      
         activeObject.filters.push(warmFilter);
         activeObject.applyFilters();
-        canvas.requestRenderAll(); // Sử dụng requestRenderAll thay cho renderAll
+        canvas.requestRenderAll(); 
     }
 }
 
@@ -490,20 +482,18 @@ warmButton.addEventListener('click', applyWarm);
 //filter-cold
 function applyCool() {
     var activeObject = canvas.getActiveObject();
-    if (activeObject) {
-        // Tạo một bộ lọc tùy chỉnh để điều chỉnh màu sắc
+    if (activeObject) {     
         var coolFilter = new fabric.Image.filters.ColorMatrix({
             matrix: [
-                1, 0, 0, 0, 0, // Điều chỉnh độ đỏ
+                1, 0, 0, 0, 0, 
                 0, 1, 0, 0, 0,
-                0, 0, 1, 0, 0.1, // Điều chỉnh độ xanh
-                0, 0, 0, 1, 0 // Điều chỉnh độ lạnh
+                0, 0, 1, 0, 0.1, 
+                0, 0, 0, 1, 0 
             ]
-        });
-        // Đặt bộ lọc cho đối tượng và áp dụng chúng
+        });      
         activeObject.filters.push(coolFilter);
         activeObject.applyFilters();
-        canvas.requestRenderAll(); // Sử dụng requestRenderAll thay cho renderAll
+        canvas.requestRenderAll(); 
     }
 }
 
@@ -522,11 +512,10 @@ function applyGrayScale() {
                 0.33, 0.33, 0.33, 0, 0, // Điều chỉnh độ lục
                 0, 0, 0, 1, 0
             ]
-        });
-        // Đặt bộ lọc cho đối tượng và áp dụng chúng
+        });        
         activeObject.filters.push(grayScaleFilter);
         activeObject.applyFilters();
-        canvas.requestRenderAll(); // Sử dụng requestRenderAll thay cho renderAll
+        canvas.requestRenderAll(); 
     }
 }
 
