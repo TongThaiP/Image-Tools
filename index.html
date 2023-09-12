@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
+  <!-- <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script> -->
+  
+  <title>Image Editor</title>
+  <style>    
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+
+  <header >
+    <nav class="navbar navbar-expand-xl navbar-dark" style="background-color: rgb(104, 104, 104); padding: 10px 10px">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a style="font-weight: 600;" class="nav-link active" aria-current="page" href="https://opnai.net/chatgpt">ChatGpt</a>
+            </li>
+            <li class="nav-item">
+              <a style="font-size: 1rem; font-weight: 400;" class="nav-link active" aria-current="page" href="https://opnai.net/digiart">Vẽ tranh</a>
+            </li>
+            <li class="nav-item">
+              <a style="font-size: 1rem; font-weight: 400;" class="nav-link active" aria-current="page" href="https://opnai.net/img2img">Vẽ tranh từ ảnh</a>
+            </li>
+            <li class="nav-item">
+              <a style="font-size: 1rem; font-weight: 400;" class="nav-link active" aria-current="page" href="https://opnai.net/imagetool">Ai Image Editor</a>
+            </li>
+            <li class="nav-item">
+              <a style="font-size: 1rem; font-weight: 400;" class="nav-link active" aria-current="page" href="https://opnai.net/gallery">Thư viện ảnh</a>
+            </li>
+            <li class="nav-item">
+              <a style="font-size: 1rem; font-weight: 400;" class="nav-link active" aria-current="page" href="https://opnai.net/code">Lập trình</a>
+            </li>
+            <li class="nav-item">
+              <a style="font-size: 1rem; font-weight: 400;" class="nav-link active" aria-current="page" href="https://opnai.net/math">Toán học</a>
+            </li>
+            <li class="nav-item">
+              <a style="font-size: 1rem; font-weight: 400;" class="nav-link active" aria-current="page" href="https://opnai.net/voice">Voice</a>
+            </li>
+            <li class="nav-item">
+              <a style="font-size: 1rem; font-weight: 400;" class="nav-link active" aria-current="page" href="https://opnai.net/guide">Hướng dẫn</a>
+            </li>
+            <li class="nav-item">
+              <a style="font-size: 1rem; font-weight: 400;" class="nav-link active" aria-current="page" href="https://opnai.net/member">Thành viên</a>
+            </li>
+            <li class="nav-item">
+              <a style="font-size: 1rem; font-weight: 400;" class="nav-link active" aria-current="page" href="#">
+                Đăng nhập|Đăng ký
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                  <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                </svg>
+              </a>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
+          </form>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Thanh công cụ -->
+  <div class="container-fluid container1 justify-content-center">
+    <div class="tool-container justify-content-start col">
+      <!-- Div cha thứ nhất -->
+      <div class="tool-item">
+        <div class="tool-item-child btn-light">
+
+          <a class="nav-link dropdown-toggle custom-toggle"  role="button" data-bs-toggle="dropdown" aria-expanded="false">           
+            <div class="parent">
+              <img class="save" alt="" src="./public/14223284391581426688-1.svg" />
+              <img class="frame-inner" alt="" src="./public/polygon-4.svg" />
+            </div>             
+          </a>
+          <ul class="dropdown-menu">
+            <li id="downloadButton">
+              <a class="dropdown-item">                
+                <div class="image-wrapper">
+                  <img alt="" src="./public/save.svg" />
+                  <div class="">Save File</div>
+                </div>                                  
+              </a>
+            </li>
+            <li  data-bs-toggle="modal" data-bs-target="#modalCanvas">
+              <a class="dropdown-item">                
+                <div class="image-wrapper">
+                  <img class="save" alt="" src="./public/frame-49.svg" />
+                  <div class="text-wrapper">Canvas</div>
+                </div>                                
+              </a>
+            </li>
+            <li data-bs-toggle="modal" data-bs-target="#modal_New_Image_to_the_canvas">
+              <a class="dropdown-item">                
+                  <div class="image-wrapper" >
+                    <img class="save" alt="" src="./public/frame-48.svg" />
+                  </div>
+                  <div class="text-wrapper">Add Image</div>                
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>      
+      <div id="undoButton" class="tool-item">
+        <div class="tool-item-child">
+          <img alt="" src="./public/undo.svg" />                      
+        </div>
+      </div>                
+      <div id="redoButton" class="tool-item">
+        <div class="tool-item-child">
+          <img alt="" src="./public/redo.svg" />
+        </div>
+      </div>
+      <div class="tool-item">
+        <div class="tool-item-child">
+          <img alt="" src="./public/bring-to-front.svg" />
+        </div>
+      </div>
+      <div class="tool-item">
+        <div class="tool-item-child">
+          <img  alt="" src="./public/bring-to-back.svg" />
+        </div>
+      </div>
+    </div>
+
+    <div class="tool-container justify-content-center col">
+      <!-- Div cha thứ hai -->
+      <!-- mouse operation     -->
+      <div class="tool-item">
+        <div class="tool-item-child">
+          <a class="nav-link dropdown-toggle custom-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img alt="" src="./public/frame-1.svg" />
+          </a>
+          <ul class="dropdown-menu frame-parent2">
+            <li>
+              <a id="pointer" class="dropdown-item">
+                <div class="group">
+                  <img class="mask-solid-1-icon" alt="" src="./public/11980669191537183377-1.svg" />
+                  <div class="save-image">Pointer mode</div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
+              <a class="dropdown-item w-100 btn btn-outline-info">
+                <div class="group w-100">                                                     
+                  <label class="mask-label d-flex flex-row align-items-center" for="btn-check-outlined">
+                    <img class="mask-solid-1-icon " alt="" src="./public/masksolid-1.svg" />        
+                    <div class="save-image justify-content-start d-flex mask">Mask</div>
+                  </label><br>                                                
+                </div>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item">
+                <div class="group">
+                  <img class="mask-solid-1-icon" alt="" src="./public/21078446401595341026-1-1.svg" />
+                  <div class="save-image">Select Area Mode</div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item">
+                <div class="group">
+                  <img class="mask-solid-1-icon" alt="" src="./public/19870962981571662155-1-1.svg" />
+                  <div class="save-image">Crop</div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- pen -->
+      <div class="tool-item">
+        <div class="tool-item-child">
+          <a class="nav-link dropdown-toggle custom-toggle" role="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+            <img class="pen-child" alt="" src="./public/frame-11.svg" />
+          </a>
+          <ul class="dropdown-menu">
+            <li id="pen" onclick="showTool(1), checkCollapse()">
+              <a class="dropdown-item btn-outline-info" >
+                <div class="group">
+                  <img class="mask-solid-1-icon" alt="" src="./public/61144455516366519065443-1.svg" />
+                  <div class="save-image">Pen</div>
+                </div>
+              </a>
+            </li>
+            <li id="eraser">
+              <a class="dropdown-item" >
+                <div class="group">
+                  <img class="mask-solid-1-icon" alt="" src="./public/20655849641644989444-1.svg" />
+                  <div class="save-image">Eraser</div>
+                </div>
+              </a>
+            </li>
+            <li id="line" onclick="showTool(2), checkCollapse()">
+              <a class="dropdown-item" >
+                <div class="group">
+                  <img class="mask-solid-1-icon" alt="" src="./public/vector.svg" />
+                  <div class="save-image">Line</div>
+                </div>
+              </a>
+            </li>
+            <li id="createSquare" onclick="showTool(3), checkCollapse()">
+              <a class="dropdown-item">
+                <div class="group">
+                  <img class="mask-solid-1-icon" alt="" src="./public/17361463391586787819-1.svg" />
+                  <div class="save-image">Retangle</div>
+                </div>
+              </a>
+            </li>
+            <li id="createCircle" onclick="showTool(4), checkCollapse()">
+              <a class="dropdown-item" >
+                <div class="group">
+                  <img class="mask-solid-1-icon" alt="" src="./public/6720888101586787815-1.svg" />
+                  <div class="save-image">Circle</div>
+                </div>
+              </a>
+            </li>        
+            <li class="dropend">
+              <a class="dropdown-item dropdown-toggle" id="subDropdown" role="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+                <div class="group">
+                  <img class="mask-solid-1-icon" alt="" src="./public/2283166211629655192-1.svg" />
+                  <div class="save-image">Icon</div>
+                </div>   
+              </a>
+              <div class="dropdown-menu" aria-labelledby="subDropdown">
+                <div class="scrollable-div">
+                  <ul class="icon-container">
+                    <!-- Thêm các icon vào đây -->
+                    <i class="bi bi-suit-heart-fill dropdown-item"></i>
+                    <i class="bi bi-alarm-fill dropdown-item"></i>
+                    <i class="bi bi-camera-fill dropdown-item"></i>
+                    <i class="bi bi-cloud-fill dropdown-item"></i>
+                    <i class="bi bi-emoji-smile-fill dropdown-item"></i>                   
+                    <i class="bi bi-suit-heart-fill dropdown-item"></i>
+                    <i class="bi bi-alarm-fill dropdown-item"></i>
+                    <i class="bi bi-camera-fill dropdown-item"></i>
+                    <i class="bi bi-cloud-fill dropdown-item"></i>
+                    <i class="bi bi-emoji-smile-fill dropdown-item"></i>  
+                    <i class="bi bi-suit-heart-fill dropdown-item"></i>
+                    <i class="bi bi-alarm-fill dropdown-item"></i>
+                    <i class="bi bi-camera-fill dropdown-item"></i>
+                    <i class="bi bi-cloud-fill dropdown-item"></i>
+                    <i class="bi bi-emoji-smile-fill dropdown-item"></i>  
+                    <i class="bi bi-suit-heart-fill dropdown-item"></i>
+                    <i class="bi bi-alarm-fill dropdown-item"></i>
+                    <i class="bi bi-camera-fill dropdown-item"></i>
+                    <i class="bi bi-cloud-fill dropdown-item"></i>
+                    <i class="bi bi-emoji-smile-fill dropdown-item"></i>  
+                    <i class="bi bi-suit-heart-fill dropdown-item"></i>
+                    <i class="bi bi-alarm-fill dropdown-item"></i>
+                    <i class="bi bi-camera-fill dropdown-item"></i>
+                    <i class="bi bi-cloud-fill dropdown-item"></i>
+                    <i class="bi bi-emoji-smile-fill dropdown-item"></i>                                       
+                  </ul>
+                </div>
+              </div>
+            </li>
+            <li id="addText" onclick="showTool(5), checkCollapse()">
+              <a class="dropdown-item">
+                <div class="group">
+                  <img class="mask-solid-1-icon" alt="" src="./public/group.svg" />
+                  <div class="save-image">Text</div>
+                </div>
+              </a>
+            </li>
+          </ul>          
+        </div>
+      </div>
+      <!-- rotate and flip -->
+      <div class="tool-item">
+        <div class="tool-item-child">
+          <a class="nav-link dropdown-toggle custom-toggle" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+            <img alt="" src="./public/frame-9.svg" />
+          </a>
+          <ul class="dropdown-menu frame-parent2">
+            <li>
+              <a id="rotateLeftButton" class="dropdown-item" >
+                <div class="group">
+                  <img class="mask-solid-1-icon" alt="" src="./public/vector1.svg" />
+                  <div class="save-image">Rotate Left 90°</div>
+                </div>
+              </a>
+            </li>
+            <li id="rotateRightButton">
+              <a class="dropdown-item" >
+                <div class="group">
+                  <img class="mask-solid-1-icon" alt="" src="./public/rotate-right-90.svg" />
+                  <div class="save-image">Rotate Right 90°</div>
+                </div>
+              </a>
+            </li>
+            <li id="flipHorizontalButton">
+              <a class="dropdown-item">
+                <div class="group">
+                  <img class="mask-solid-1-icon" alt="" src="./public/flip-horizontally.svg" />
+                  <div class="save-image">Flip Horizontally</div>
+                </div>
+              </a>
+            </li>
+            <li id="flipVerticalButton">
+              <a class="dropdown-item" >
+                <div class="group">
+                  <img class="mask-solid-1-icon" alt="" src="./public/flip-vertically.svg" />
+                  <div class="save-image">Flip Vertically</div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- finetune -->
+      <div class="tool-item">
+        <div class="tool-item-child"><a class="nav-link dropdown-toggle custom-toggle" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+          <img alt="" src="./public/frame-12.svg" />
+        </a>
+        <ul class="dropdown-menu frame-parent2">
+          <li id="sepia">
+            <a class="dropdown-item" >
+              <div class="group">
+                <img class="mask-solid-1-icon" alt="" src="./public/9672219151587982129-1.svg" />
+                <div class="save-image">Sepia</div>
+              </div>
+            </a>
+          </li>
+          <li id="blur">
+            <a class="dropdown-item" >
+              <div class="group">
+                <img class="mask-solid-1-icon" alt="" src="./public/76665627716362727615006-1.svg" />
+                <div class="save-image">Blur</div>
+              </div>
+            </a>
+          </li>
+          <li id="opacity">
+            <a class="dropdown-item">
+              <div class="group">
+                <img class="mask-solid-1-icon" alt="" src="./public/1527104261587982143-1.svg" />
+                <div class="save-image">Opacity</div>
+              </div>
+            </a>
+          </li>         
+        </ul></div>
+      </div>
+
+      <!-- filter -->
+      <div class="tool-item">
+        <div class="tool-item-child">
+          <a class="nav-link dropdown-toggle custom-toggle" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img  alt="" src="./public/frame-13.svg" />
+          </a>
+          <div class="dropdown-menu">
+                
+            <div class="frame-parent15">
+              <div id="default-filter" class="default-1-group">
+                <img class="default-1-icon1" alt="" src="./public/default-1@2x.png" />
+                <div class="default1">Default</div>
+              </div>
+              <!-- <div class="default-1-group">
+                <img class="default-1-icon1" alt="" src="./public/chrome-1@2x.png" />
+                <div class="default1">Chrome</div>
+              </div> -->
+              <div id="cold-filter" class="default-1-group">
+                <img class="cold-1-icon1" alt="" src="./public/cold-1@2x.png" />
+                <div class="default1">Cold</div>
+              </div>
+              <div id="warm-filter" class="default-1-group">
+                <img class="default-1-icon1" alt="" src="./public/warm-1@2x.png" />
+                <div class="default1">Warm</div>
+              </div>
+              <div id="gray-scale-filter" class="default-1-group">
+                <img class="default-1-icon1" alt="" src="./public/grayscale-1@2x.png" />
+                <div class="default1">Grayscale</div>
+              </div>
+              <div id="invert-filter" class="default-1-group">
+                <img class="default-1-icon1" alt="" src="./public/invert-1@2x.png" />
+                <div class="default1">Invert</div>
+              </div>
+              <!-- <div class="default-1-group">
+                <img class="default-1-icon1" alt="" src="./public/invert-1@2x.png" />
+                <div class="default1">Invert</div>
+              </div>
+              <div class="default-1-group">
+                <img class="default-1-icon1" alt="" src="./public/invert-1@2x.png" />
+                <div class="default1">Invert</div>
+              </div>
+              <div class="default-1-group">
+                <img class="default-1-icon1" alt="" src="./public/invert-1@2x.png" />
+                <div class="default1">Invert</div>
+              </div>
+              <div class="default-1-group">
+                <img class="default-1-icon1" alt="" src="./public/invert-1@2x.png" />
+                <div class="default1">Invert</div>
+              </div>
+              <div class="default-1-group">
+                <img class="default-1-icon1" alt="" src="./public/invert-1@2x.png" />
+                <div class="default1">Invert</div>
+              </div>
+              <div class="default-1-group">
+                <img class="default-1-icon1" alt="" src="./public/invert-1@2x.png" />
+                <div class="default1">Invert</div>
+              </div>
+              <div class="default-1-group">
+                <img class="default-1-icon1" alt="" src="./public/invert-1@2x.png" />
+                <div class="default1">Invert</div>
+              </div>
+              <div class="default-1-group">
+                <img class="default-1-icon1" alt="" src="./public/invert-1@2x.png" />
+                <div class="default1">Invert</div>
+              </div>
+              <div class="default-1-group">
+                <img class="default-1-icon1" alt="" src="./public/invert-1@2x.png" />
+                <div class="default1">Invert1</div>
+              </div> -->
+            </div>
+          
+        </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="tool-container justify-content-end col">
+      <!-- Div cha thứ ba -->
+      <div class="tool-item">
+        <div id="zoomInButton" class="tool-item-child"><img class="save-icon" alt="" src="./public/frame-87.svg" /></div>
+      </div>
+      <div class="tool-item">
+        <div id="zoomOutButton" class="tool-item-child"><img alt="" src="./public/frame-88.svg" /></div>
+      </div>
+      <div class="tool-item"  data-bs-toggle="modal" data-bs-target="#modalGenerateAI">
+        <div class="tool-item-child"><img alt="" src="./public/ai-generated-image.svg" /></div>
+      </div>
+      <div class="tool-item" data-bs-toggle="modal" data-bs-target="#modalqr">
+        <div class="tool-item-child"><img alt="" src="./public/qr-code.svg" /></div>
+      </div>
+    </div>    
+  </div>
+
+  <div class="collapse container-fluid container1 justify-content-center" style="width: 100% !important; " id="openPenTool">
+    <div class="tool-container justify-content-center"  style="width: calc(100% - 47px) !important;">
+          <div class="collapse pen-tool tool-item align-items-center" id="tool1">
+            <input id="colorPicker1" type="color" class="form-control form-control-color inner-div" value="#563d7c" title="Choose your color">    
+          </div> 
+
+          <div class="collapse pen-tool tool-item pt-1" id="tool2">                   
+              <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Size<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                  <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                </svg>
+              </a>
+              <ul class="dropdown-menu" >
+                <li><a class="dropdown-item pen-size" data-size="1">X-Small</a></li>
+                <li><a class="dropdown-item pen-size" data-size="3">Small</a></li>
+                <li><a class="dropdown-item pen-size" data-size="5">Medium</a></li>
+                <li><a class="dropdown-item pen-size" data-size="7">Large</a></li>
+                <li><a class="dropdown-item pen-size" data-size="9">X-Large</a></li>                        
+              </ul>         
+          </div>
+
+          <div class="collapse pen-tool tool-item pt-1" id="tool3">                   
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Font<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+              <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+            </svg>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" onclick="setFontFamily('Times New Roman')">Times New Roman</a></li>
+            <li><a class="dropdown-item" onclick="setFontFamily('Arial')">Arial</a></li>
+            <li><a class="dropdown-item" onclick="setFontFamily('Verdana')">Verdana</a></li>   
+            <li><a class="dropdown-item" onclick="setFontFamily('Helvetica')">Helvetica</a></li>
+            <li><a class="dropdown-item" onclick="setFontFamily('Courier New')">Courier New</a></li>
+            <li><a class="dropdown-item" onclick="setFontFamily('Georgia')">Georgia</a></li>  
+            <li><a class="dropdown-item" onclick="setFontFamily('Roboto')">Roboto</a></li>
+            <li><a class="dropdown-item" onclick="setFontFamily('Open Sans')">Open Sans</a></li>
+            <li><a class="dropdown-item" onclick="setFontFamily('Comic Sans MS')">Comic Sans MS</a></li>    
+            <li><a class="dropdown-item" onclick="setFontFamily('Tahoma')">Tahoma</a></li>       
+          </ul>         
+          </div>
+
+          <div class="collapse pen-tool tool-item pt-1" id="tool4">                   
+            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Font Size<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+              </svg>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a onclick="setFontSize(16)" class="dropdown-item" >16</a></li>
+              <li><a onclick="setFontSize(17)"  class="dropdown-item" >17</a></li>
+              <li><a onclick="setFontSize(18)"  class="dropdown-item" >18</a></li>
+              <li><a onclick="setFontSize(19)"  class="dropdown-item" >19</a></li>
+              <li><a onclick="setFontSize(20)"  class="dropdown-item" >20</a></li>
+              <li><a onclick="setFontSize(21)"  class="dropdown-item" >21</a></li>
+              <li><a onclick="setFontSize(22)"  class="dropdown-item" >22</a></li>
+              <li><a onclick="setFontSize(23)"  class="dropdown-item" >23</a></li>
+              <li><a onclick="setFontSize(24)"  class="dropdown-item" >24</a></li>
+              <li><a onclick="setFontSize(25)"  class="dropdown-item" >25</a></li>
+              <li><a onclick="setFontSize(26)"  class="dropdown-item" >26</a></li>
+              <li><a onclick="setFontSize(27)"  class="dropdown-item" >27</a></li>
+              <li><a onclick="setFontSize(28)"  class="dropdown-item" >28</a></li>
+              <li><a onclick="setFontSize(29)"  class="dropdown-item" >29</a></li>
+              <li><a onclick="setFontSize(30)"  class="dropdown-item" >30</a></li>              
+            </ul>         
+          </div> 
+
+          <div class="collapse pen-tool tool-item" id="tool5">
+            <div style="padding-top: 1px; display: flex; flex-direction: row;" >
+              <button id="bold" type="button" class="btn btn-light" data-bs-toggle="button"><i class="bi bi-type-bold"></i></button>
+              <button id="italic" type="button" class="btn btn-light" data-bs-toggle="button"><i class="bi bi-type-italic"></i></button>
+              <button type="button" class="btn btn-light" data-bs-toggle="button"><i class="bi bi-type-underline"></i></button>
+            </div>
+          </div>          
+      </div>    
+      <div class="second-div btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#openPenTool">
+        <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+          <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+        </svg>
+      </div>  
+  </div>
+  <!-- End Thanh công cụ -->
+  
+
+    <!-- Hiển thị hình ảnh -->
+  <div class="container-fluid">
+    <div class="d-flex justify-content-center">
+      <div id="canvas-container" style="position: relative !important;" class=" image-container d-inline-block h-auto">
+        <!-- Nội dung hiển thị hình ảnh -->
+        <div id="drawcanvas" class="drawcanvas">
+          <canvas id="canvas"  thai="1"></canvas>        
+        </div>
+        <div id="drawcanvas1" class="drawcanvas1" style="display: none;">
+          <canvas id="maskcanvas"  thai="2"></canvas>  
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Footer -->
+  <footer>
+    <div class="container-fluid footer pt-4 pb-4">
+      <div class="d-flex justify-content-center text-center flex-column">
+        <!-- Các div con trong footer -->
+        <div class="text-white">
+          Hỗ trợ bởi OpenAI |                      
+          <a href="https://opnai.net/privacy-policy" target="_blank">Chính sách riêng tư</a> |
+          <a href="https://opnai.net/term-of-service" target="_blank">Điều khoản sử dụng</a> |
+          <a href="mailto:openainet2023@gmail.com">Email: openainet2023@gmail.com</a>          
+        </div>
+        <div>
+          <div>
+            <p class="text-white" style="font-size: 14px;">
+              This site is protected by reCAPTCHA and the Google
+              <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a> and
+              <a href="https://policies.google.com/terms" target="_blank">Terms of Service</a> apply
+            </p>
+          </div>
+        </div>
+        <div>
+          <div class="d-flex justify-content-center">
+            <div class="footer-icons">
+              <a href="#" class="footer-icon d-inline-block"><img class="save" style="max-height: 20px; margin-left: 15px; margin-right: 15px;" alt="UAE flag" src="./public/uae.svg" /></a>
+              <a href="#" class="footer-icon d-inline-block"><img class="save" style="max-height: 20px; margin-left: 15px; margin-right: 15px;" alt="Bangladesh flag" src="./public/bangladesh.svg" /></a>
+              <a href="#" class="footer-icon d-inline-block"><img class="save" style="max-height: 20px; margin-left: 15px; margin-right: 15px;" alt="Germany flag" src="./public/germany.svg" /></a>
+              <a href="#" class="footer-icon d-inline-block"><img class="save" style="max-height: 20px; margin-left: 15px; margin-right: 15px;" alt="America flag" src="./public/america.svg" /></a>
+              <a href="#" class="footer-icon d-inline-block"><img class="save" style="max-height: 20px; margin-left: 15px; margin-right: 15px;" alt="Spain flag" src="./public/spain.svg" /></a>
+              <a href="#" class="footer-icon d-inline-block"><img class="save" style="max-height: 20px; margin-left: 15px; margin-right: 15px;" alt="France flag" src="./public/france.svg" /></a>
+              <a href="#" class="footer-icon d-inline-block"><img class="save" style="max-height: 20px; margin-left: 15px; margin-right: 15px;" alt="India flag" src="./public/india.svg" /></a>
+              <a href="#" class="footer-icon d-inline-block"><img class="save" style="max-height: 20px; margin-left: 15px; margin-right: 15px;" alt="Indonesia flag" src="./public/indonesia.svg" /></a>
+              <a href="#" class="footer-icon d-inline-block"><img class="save" style="max-height: 20px; margin-left: 15px; margin-right: 15px;" alt="Japan flag" src="./public/japan.svg" /></a>
+              <a href="#" class="footer-icon d-inline-block"><img class="save" style="max-height: 20px; margin-left: 15px; margin-right: 15px;" alt="Korea flag" src="./public/korea.svg" /></a>
+              <a href="#" class="footer-icon d-inline-block"><img class="save" style="max-height: 20px; margin-left: 15px; margin-right: 15px;" alt="Malaysia flag" src="./public/malaysia.svg" /></a>
+              <a href="#" class="footer-icon d-inline-block"><img class="save" style="max-height: 20px; margin-left: 15px; margin-right: 15px;" alt="Brazil flag" src="./public/brazil.svg" /></a>
+              <a href="#" class="footer-icon d-inline-block"><img class="save" style="max-height: 20px; margin-left: 15px; margin-right: 15px;" alt="Potugal flag" src="./public/portugal.svg" /></a>
+              <a href="#" class="footer-icon d-inline-block"><img class="save" style="max-height: 20px; margin-left: 15px; margin-right: 15px;" alt="Russia flag" src="./public/russia.svg" /></a>
+              <a href="#" class="footer-icon d-inline-block"><img class="save" style="max-height: 20px; margin-left: 15px; margin-right: 15px;" alt="Philippin flag" src="./public/philippin.svg" /></a>
+              <a href="#" class="footer-icon d-inline-block"><img class="save" style="max-height: 20px; margin-left: 15px; margin-right: 15px;" alt="VietNam flag" src="./public/VietNam.svg" /></a>
+              <a href="#" class="footer-icon d-inline-block"><img class="save" style="max-height: 20px; margin-left: 15px; margin-right: 15px;" alt="China flag" src="./public/china.svg" /></a>
+              <a href="#" class="footer-icon d-inline-block"><img class="save" style="max-height: 20px; margin-left: 15px; margin-right: 15px;" alt="Greece flag" src="./public/greece.svg" /></a>
+              <a href="#" class="footer-icon d-inline-block"><img class="save" style="max-height: 20px; margin-left: 15px; margin-right: 15px;" alt="Italy flag" src="./public/italy.svg" /></a>
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal New Image to the canvas-->
+  <div class="modal fade" id="modal_New_Image_to_the_canvas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">New Image to the canvas</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+        <div class="modal-body">
+          <div class="add-image1">                        
+            <div class="frame-parent11">
+              <div class="creation-wrapper">
+                <div class="creation">Creation</div>
+              </div>
+              <div class="frame-child4">
+                <input type="range" style="margin-top:10px;" class="form-range" id="rangeNewImageCanvas">
+              </div>
+              <div class="promt-wrapper">
+                <div class="promt">Promt</div>
+              </div>
+            </div>      
+            <textarea class="form-control add-image-item" placeholder="Text input" id="floatingTextarea"></textarea>
+            <div class="drag-this-slider">
+              Drag this slider towards creation If you want to be more creative.
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer" style="height: 100px;">
+          <div class="reset-canva-wrapper">
+            <div type="button" class="reset-canva">Generate </div>
+          </div>
+          <div id="load-image" class="load-background-image-wrapper">
+            <div type="button" class="load-background-image">Or Load Local Image</div>
+          </div>
+          <div class="frame-parent10">
+            <div class="frame-child3 d-inline-block"><input type="checkbox"></div>
+            <div class="load-as-mask">Load as mask layer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <!-- End Modal New Image to the canvas-->
+
+  <!-- model generrate qr -->
+  <div class="modal fade" id="modalqr" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Generate QR code</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+      
+        <div class="modal-body">
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default">Input your data</span>
+            <input id="qrcode" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+          </div>
+        </div>
+      
+        <div id="qrcode-btn" onclick="generateQRCode()" class="modal-footer">
+          <button type="button" class="btn btn-primary">Generate</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--end model generrate qr -->
+
+  <!-- modal Canvas -->
+  <div class="modal fade" id="modalCanvas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Canvas</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="parentm">
+            <div class="child">
+              <div class="grandchild">
+                <div class="input-group mb-3">
+                  <span class="input-group-text" >Width:</span>
+                  <input id="width-canvas" value="1354" type="number" class="form-control" placeholder="Number" aria-label="Number" aria-describedby="basic-addon1">
+                </div>
+              </div>
+              <div class="grandchild">
+                <div class="input-group mb-3">
+                  <span class="input-group-text" >Height:</span>
+                  <input id="height-canvas" value="1024" type="number" class="form-control" placeholder="Number" aria-label="Number" aria-describedby="basic-addon1">
+                </div>
+              </div>
+            </div>
+            
+            <div class="">
+              <label for="ColorInput" class="form-label">Background color:</label>
+              <input id="ColorInput"  type="color" class="form-control form-control-color" value="#563d7c" title="Choose your color">
+            </div>
+            
+            <div class="child">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+                <label class="form-check-label" for="flexCheckDefault">
+                  Transparent
+                </label>
+              </div>
+            </div>
+          </div>                
+        </div>
+        <div class="modal-footer">        
+          <button id="set-canvas-color" type="button" class="btn btn-primary">Set Background Color Canvas</button>
+          <button id="openFileButton" type="button" class="btn btn-primary">Load Background Image</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end modal Canvas -->
+
+  <!-- modal Ai genarate -->
+  <div class="modal fade" id="modalGenerateAI" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">AI Generate Image</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <div class="sub-container">
+            <div class="flex-direction-row d-flex d-inline-block">
+              <div id="imageValue"><span>Image 0.50</span></div>
+              <div>
+                <input id="range1" type="range" class="range1" min="0" max="100" step="1" value="50">
+              </div>
+              <div id="promptValue"><span></span>0.50 Prompt</div>
+            </div>
+            <div>
+              <p class="d-inline-block" style="font-size: smaller;">Drag the slider to the Prompt when doing outpainting or object removal, and drag it back to the Image when adding new objects or transforming the image.</p>
+            </div>
+          </div>
+      
+          <!-- Div 2 -->
+          <div class="sub-container">
+            <div class="flex-direction-row d-flex d-inline-block">
+              <div><span>Creation</span></div>
+              <div>
+                <input id="range1" type="range" class="range1" min="0" max="100" step="1" value="50">
+              </div>
+              <div><span></span>Prompt</div>
+            </div>
+            <div>
+              <p class="d-inline-block" style="font-size: smaller;">Drag this slider towards creation If you want to be more creative.</p>
+            </div>
+          </div>
+      
+          <!-- Div 3 -->
+          <div class="sub-container-row">
+            <div class="d-inline-block text-nowrap">Start from:</div>
+            <div class="d-inline-block">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                <label class="form-check-label" for="inlineRadio1">Blur image</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                <label class="form-check-label" for="inlineRadio2">Original</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+                <label class="form-check-label" for="inlineRadio3">Random</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option4">
+                <label class="form-check-label" for="inlineRadio4">Nothing</label>
+              </div>
+            </div>
+          </div>
+      
+          <!-- Div 4 -->
+          <div class="sub-container-row">
+            <div class="d-inline-block text-nowrap">              
+              <label for="customRange1" class="form-label">Mask Blur:</label>              
+            </div>
+            <div class="d-inline-block">              
+              <input type="range" class="form-range justify-content-center align-items-center" id="customRange1">             
+            </div>
+            <div class="d-inline-block">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                  Mask Inverted
+                </label>
+              </div>
+            </div>
+          </div>
+      
+          <!-- Div 5 -->
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Genarate</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const rangeInput = document.getElementById('range1');
+    const imageValue = document.getElementById('imageValue');
+    const promptValue = document.getElementById('promptValue');  
+    // Bắt sự kiện input khi người dùng thay đổi giá trị thanh range
+    rangeInput.addEventListener('input', () => {
+      imageValue.textContent = 'Image '+(1-rangeInput.value/100).toFixed(2);
+    });
+    rangeInput.addEventListener('input', () => {
+      promptValue.textContent =(rangeInput.value/100).toFixed(2)+' Prompt ';
+    });
+  </script>
+  <!--end modal Ai genarate -->
+ 
+  <!-- Show hide tool -->
+  <script>
+    function showTool(toolNumber) {
+      //hide all tool div      
+      var toolList = document.getElementsByClassName('pen-tool');
+      for (var i = 0; i < toolList.length; i++) {
+        toolList[i].classList.remove('show');
+        toolList[i].classList.add('collapse');
+      }
+      switch (toolNumber) {
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+          document.getElementById('tool1').classList.remove('collapse');
+          document.getElementById('tool2').classList.remove('collapse');
+          document.getElementById('tool1').classList.add('show');
+          document.getElementById('tool2').classList.add('show');
+          break;
+
+        case 5:
+          document.getElementById('tool1').classList.remove('collapse');
+          document.getElementById('tool3').classList.remove('collapse');
+          document.getElementById('tool4').classList.remove('collapse');
+          document.getElementById('tool5').classList.remove('collapse');
+          document.getElementById('tool1').classList.add('show');
+          document.getElementById('tool3').classList.add('show');
+          document.getElementById('tool4').classList.add('show');
+          document.getElementById('tool5').classList.add('show');
+          break;
+
+        default:
+          // Xử lý khi toolNumber không khớp với các case trên (nếu cần).
+          break;
+      }
+    }
+  </script>
+  <!--End show hide tool -->
+  <script>
+    function checkCollapse() {
+    const myDiv = document.getElementById("openPenTool");
+    const isCollapsed = myDiv.classList.contains("collapse");
+    
+    if (isCollapsed) {
+      document.getElementById('openPenTool').classList.remove('collapse');
+      document.getElementById('openPenTool').classList.add('show');
+    } 
+  }
+  </script> 
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="app.js"></script>
+  <script type="text/javascript" src="qrcode.min.js"></script>
+</body>
+</html>
